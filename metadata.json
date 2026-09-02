@@ -1,0 +1,7 @@
+{
+  "name": "Taller POS",
+  "description": "Punto de venta e historial de servicios offline para talleres de motos, bicis, monopatines y motos eléctricas con gestión de inventario.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
