@@ -2,6 +2,8 @@ package com.example
 
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onRoot
+import com.example.data.models.VehicleType
+import com.example.ui.components.VehicleBadge
 import com.example.ui.theme.MyApplicationTheme
 import com.github.takahirom.roborazzi.RobolectricDeviceQualifiers
 import com.github.takahirom.roborazzi.captureRoboImage
@@ -20,9 +22,16 @@ class GreetingScreenshotTest {
   @get:Rule val composeTestRule = createComposeRule()
 
   @Test
-  fun greeting_screenshot() {
-    composeTestRule.setContent { MyApplicationTheme { Greeting("Robolectric") } }
+  fun vehicle_badge_screenshot() {
+    composeTestRule.setContent {
+      MyApplicationTheme(darkTheme = true) {
+        VehicleBadge(vehicleType = VehicleType.MOTO)
+      }
+    }
 
-    composeTestRule.onRoot().captureRoboImage(filePath = "src/test/screenshots/greeting.png")
+    // Wait for idle to ensure rendering is complete
+    composeTestRule.waitForIdle()
+
+    composeTestRule.onRoot().captureRoboImage(filePath = "src/test/screenshots/vehicle_badge.png")
   }
 }
