@@ -2,6 +2,7 @@ package com.example
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.BorderStroke
@@ -44,6 +45,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -74,6 +76,20 @@ class MainActivity : ComponentActivity() {
     setContent {
       val viewModel: TallerViewModel = viewModel()
       val settings by viewModel.workshopSettings.collectAsStateWithLifecycle()
+
+      DisposableEffect(settings.isDarkMode) {
+        enableEdgeToEdge(
+          statusBarStyle = SystemBarStyle.auto(
+            android.graphics.Color.TRANSPARENT,
+            android.graphics.Color.TRANSPARENT,
+          ) { settings.isDarkMode },
+          navigationBarStyle = SystemBarStyle.auto(
+            android.graphics.Color.TRANSPARENT,
+            android.graphics.Color.TRANSPARENT,
+          ) { settings.isDarkMode }
+        )
+        onDispose {}
+      }
 
       MyApplicationTheme(darkTheme = settings.isDarkMode) {
         TallerApp(viewModel = viewModel)
